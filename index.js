@@ -5,6 +5,10 @@ const port  = 8000;
 const app = express();
 const db = require('./confiq/mongoose');
 const layout = require('express-ejs-layouts');
+const session = require('express-session');
+const passport = require('passport');
+const passportLocal = require('./confiq/passport_local_strategy');
+const MongoStore = require('connect-mongo');
 
 app.use(express.urlencoded());
 
@@ -17,6 +21,29 @@ app.set('layout extractScripts',true);
 
 //We need to specify before the router about the layout
 app.use(expressEjsLayouts);
+
+
+app.use(session({
+    name:'codial',
+    secret : 'blahsomething',
+    saveUninitialized:false,
+    resave:false,
+    cookie:{
+        maxAge:(1000*60*100)
+    },
+    store : MongoStore.create({
+        mongoUrl : 'mongodb://127.0.0.1:27017/codial',
+        autoRemove : 'disabled'
+    },function(err){
+        console.log(err || 'connect-mongo established');
+    }
+    )
+}));
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+app.use(passport.setAuthenticated);
 
 //using express router
 app.use('/',require('./routes'));
