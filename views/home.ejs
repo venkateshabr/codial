@@ -37,7 +37,7 @@
                             <ul id="post-comments-<%= post._id %>">
                                 <% for(comment of post.comment){ %>
                                     <li>
-                                        <% if(locals.user && (locals.user.id == post.user.id || locals.user.id == comment.id) ) { %>
+                                        <% if(locals.user && (locals.user.id == post.user.id || locals.user.id == comment.user.id) ) { %>
                                             <a href="/comment/delete/?id=<%= post.id %>&cid=<%= comment.id %>">X</a>
                                         <% } %>
                                         <%= comment.content %><br/>

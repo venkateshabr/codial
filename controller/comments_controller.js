@@ -27,22 +27,22 @@ module.exports.create = function(req,res){
 
 module.exports.delete = function(req,res){
     Post.findById(req.query.id).then((post)=>{
-        if(post.user == req.user.id){
+      
  //There is another way of deleting comment shown in video
 // Post.findByIdAndUpdate(req.query.id, $pull : {comment : req.query.cid}).then(post){return res.redirect('/)};
 // This way we can remove the comment id directly from post db. Mangoose helps us..
-            let index = post.comment.indexOf(req.query.cid);
-            console.log(index);
-            post.comment.splice(index,1);
-            post.save();
+            
             
             Comment.findById(req.query.cid).then((comment)=>{
+
+                let index = post.comment.indexOf(req.query.cid);
+                console.log(index);
+                post.comment.splice(index,1);
+                post.save();
                 comment.deleteOne();
                 return res.redirect('/');
             })
-        }else{
-            return res.redirect('back');
-        }
+        
        
     })
 }
