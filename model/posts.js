@@ -9,6 +9,7 @@ const postSchema = new mongoose.Schema({
         type : mongoose.Schema.Types.ObjectId,
         ref : 'User'
     },
+    //creating a comments array to store the all the comments id's of particular post.
     comment : [{
         type : mongoose.Schema.Types.ObjectId,
         ref : 'Comment'

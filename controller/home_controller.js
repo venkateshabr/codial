@@ -12,7 +12,15 @@ module.exports.home = function(req,res){
     // })
     
     //populating the user to get the object.
-    Post.find({}).populate('user').then((post)=>{
+    Post.find({})
+    .populate('user')
+    .populate({
+        path : 'comment',
+        populate : {
+            path : 'user'
+        }
+    })
+    .then((post)=>{
         return res.render('home',{
             title: 'home',
             post : post,
