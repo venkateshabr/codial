@@ -8,8 +8,10 @@ const layout = require('express-ejs-layouts');
 const session = require('express-session');
 const passport = require('passport');
 const passportLocal = require('./confiq/passport_local_strategy');
+const flash = require('connect-flash');
 const MongoStore = require('connect-mongo');
 const sassMiddleware = require('node-sass-middleware');
+const middleware = require('./confiq/middleware');
 
 app.use(sassMiddleware({
     src : './assets/scss',
@@ -22,6 +24,7 @@ app.use(sassMiddleware({
 app.use(express.urlencoded());
 
 app.use(cookieParser());
+
 
 app.use(express.static('assets'));
 
@@ -53,6 +56,10 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use(passport.setAuthenticated);
+
+//flash need to be put after the session because it uses it.
+app.use(flash());
+app.use(middleware.flashmessage);
 
 //using express router
 app.use('/',require('./routes'));

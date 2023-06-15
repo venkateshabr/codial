@@ -7,7 +7,7 @@
 <section id="post-feed">
     <h4>Post</h4>
     <% if(locals.user){%> 
-        <form action='/post/create-post' method='post'>
+        <form action='/post/create-post' id="new-post-form" method='post'>
             <textarea name="content" placeholder="Type Here.." required></textarea>
             <input type='submit' value="Post"/>
         </form>
@@ -16,38 +16,7 @@
         <ul>
             <% for(post of post){ %>
                 <p>
-                <li>
-                    <% if(locals.user && locals.user.id == post.user.id ) { %>
-                        <small>
-                            <a href="/post/delete/<%= post.id %>">X</a>
-                        </small>
-                    <% } %>
-                    <%= post.content %>
-                    <br/>
-                    <small><%= post.user.name %></small>
-                    <div class="post-comments">
-                        <% if(locals.user){%>
-                            <form action="/comment/create-comment" method="post">
-                                <input type="text" name="content" placeholder="type comments here.." required/>
-                                <input type="hidden" name="post" value="<%= post._id %>"/>
-                                <input type="submit" value="Add Comment"/>
-                            </form>   
-                        <%}%>
-                        <div class="post-comments-list">
-                            <ul id="post-comments-<%= post._id %>">
-                                <% for(comment of post.comment){ %>
-                                    <li>
-                                        <% if(locals.user && (locals.user.id == post.user.id || locals.user.id == comment.user.id) ) { %>
-                                            <a href="/comment/delete/?id=<%= post.id %>&cid=<%= comment.id %>">X</a>
-                                        <% } %>
-                                        <%= comment.content %><br/>
-                                        <small><%= comment.user.name %></small>
-                                    </li>
-                                <% } %>
-                            </ul>
-                        </div>    
-                    </div>
-                </li>
+                    <%- include('post'); %>
                 </p>
             <% } %>  
 
@@ -55,3 +24,14 @@
     </div>
 </section>
 
+<section id="all_Users_profile">
+    <h4>Users :</h4>
+    <ul>
+        <% for(user of all_users){ %>
+          <li><a href="/user/profile/<%= user.id %>"><%= user.name %></a></li>  
+        <% } %>
+    </ul>
+   
+</section>
+<script src="/js/home_comments.js"></script>
+<script src="/js/home_posts.js"></script>

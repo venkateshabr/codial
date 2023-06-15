@@ -1,13 +1,23 @@
 
 
-            <h1>
-                Codial / Profile
-            </h1>
-            <h3>
-                <%= user.email %>
-            </h3>
-            <h3>
-                <%= user.name %>
-            </h3>
+<h1>
+    Codial / Profile
+</h1>
+
+
+<% if(user.id == user_profile.id){ %>
+    <form action="/user/update/<%= user_profile.id %>" method="post">
+        <input type="text" name="name" placeholder="your name" value="<%= user_profile.name %>"/>
+        <input type="email" name="email" placeholder="your email" value="<%= user_profile.email %>"/>
+        <input type="submit" value="Update"/>
+    </form>
+<% } else{ %>
+    <h3>
+        <%= user_profile.email %>
+    </h3>
+    <h3>
+        <%= user_profile.name %>
+    </h3>
+<% } %>
             
             

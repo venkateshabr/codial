@@ -1,18 +1,33 @@
 const Post = require('../model/posts');
 const Comment = require('../model/comments');
+const User = require('../model/user');
 
-module.exports.createpost = function(req,res){
-    Post.create({
+module.exports.createpost = async  function(req,res){
+    try{
+        let post = await Post.create({
         content : req.body.content,
         user : req.user._id
-    }).then((post)=>{     
+        });
+       
+        if(req.xhr){
+            post = await post.populate('user','name'); 
+            return res.status(200).json({
+                // data : {
+                //     post : post
+                // } ,
+                data : post,
+                message : "Post is created"
+            });
+        }
+
+        req.flash('success','post published')    
         return res.redirect('/');
-    }).catch((err)=>{
+    }catch(err){
         if(err){
-        console.log('err : ',err);
+        req.flash('error',err);
         return;
         }
-    });
+    };
 }
 
 module.exports.destroy = function(req,res){
@@ -23,8 +38,21 @@ module.exports.destroy = function(req,res){
             post.deleteOne();
             Comment.deleteMany({post : req.params.id}).catch((err)=>{
                 console.log('Error in removing the commments of the post : ',err);
+                req.flash('error','you cannot delete the potst!')
                 res.redirect('back');
-            })
+            });
+
+            if(req.xhr){
+                return res.status(200).json({
+                    data : {
+                        post_id : req.params.id
+                    },
+                    message : 'post and all associated comments are deleted',
+                    
+                })
+            }
+            req.flash('success','Post and all associated comments are deleted successfully');
+
             res.redirect('/');
         }else{
             res.redirect('back');

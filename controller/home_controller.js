@@ -1,6 +1,7 @@
 const Post = require('../model/posts');
+const User = require('../model/user');
 
-module.exports.home = function(req,res){
+module.exports.home = async function(req,res){
     //return res.end('<h1>Express is up and running</h1>');
     // Post.find({}).then((post)=>{
     //     return res.render('home',{
@@ -12,20 +13,25 @@ module.exports.home = function(req,res){
     // })
     
     //populating the user to get the object.
-    Post.find({})
-    .populate('user')
-    .populate({
-        path : 'comment',
-        populate : {
-            path : 'user'
-        }
-    })
-    .then((post)=>{
+    try{
+        let post = await Post.find({})
+        .sort('-createdAt')
+        .populate('user')
+        .populate({
+            path : 'comment',
+            populate : {
+                path : 'user'
+            }
+        })
+        
+        let user = await  User.find({});
         return res.render('home',{
             title: 'home',
             post : post,
+            all_users : user
         });
-    }).catch((err)=>{
-        console.log('err :',err);
-    })
+    }catch(err){
+        console.log('Error',err);
+    }
+   
 }
