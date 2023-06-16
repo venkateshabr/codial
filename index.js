@@ -13,6 +13,8 @@ const MongoStore = require('connect-mongo');
 const sassMiddleware = require('node-sass-middleware');
 const middleware = require('./confiq/middleware');
 
+
+
 app.use(sassMiddleware({
     src : './assets/scss',
     dest : './assets/css',
@@ -27,6 +29,9 @@ app.use(cookieParser());
 
 
 app.use(express.static('assets'));
+
+//creating route for uploads
+app.use('/uploads',express.static(__dirname + '/uploads'));
 
 app.set('layout extractStyles',true);
 app.set('layout extractScripts',true);

@@ -1,3 +1,5 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" type="text/css" href="css/post.css">
 <li id="post-<%= post._id %>">
     <% if(locals.user && locals.user.id == post.user.id ) { %>
         <small>
@@ -7,6 +9,11 @@
     <%= post.content %>
     <br/>
     <small><%= post.user.name %></small>
+    <br/>
+    <div >
+        <i onclick="myfunction(this)" class="fa fa-thumbs-up"></i>
+        <span id="likes-<%= post.id %>"></span>
+    </div>
     <div class="post-comments">
         <% if(locals.user){%>
             <form action="/comment/create-comment" id="<%= post._id %>-new-comment-form" method="post">

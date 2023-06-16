@@ -108,6 +108,14 @@
        
     }
 
+   function  myfunction(x){
+        x.classList.toggle('liked');
+        if(x){
+            console.log('ihh')
+            $(`${this > span }`).innerText = 1;
+        }
+    }
+
     createpost();
     convertingToAjax();
    

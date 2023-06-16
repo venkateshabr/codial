@@ -5,10 +5,17 @@
 </h1>
 
 
+
 <% if(user.id == user_profile.id){ %>
-    <form action="/user/update/<%= user_profile.id %>" method="post">
+
+    <img src="<%= user_profile.avatar %>" alt="<%=  user_profile.name  %>" width="500">
+
+
+    
+    <form action="/user/update/<%= user_profile.id %>" enctype="multipart/form-data" method="post">
         <input type="text" name="name" placeholder="your name" value="<%= user_profile.name %>"/>
         <input type="email" name="email" placeholder="your email" value="<%= user_profile.email %>"/>
+        <input type="file" name="avatar" placeholder="Profile Picture"/>
         <input type="submit" value="Update"/>
     </form>
 <% } else{ %>
