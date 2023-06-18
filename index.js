@@ -8,6 +8,7 @@ const layout = require('express-ejs-layouts');
 const session = require('express-session');
 const passport = require('passport');
 const passportLocal = require('./confiq/passport_local_strategy');
+const passportJwt = require('./confiq/passport_jwt_strategy');
 const flash = require('connect-flash');
 const MongoStore = require('connect-mongo');
 const sassMiddleware = require('node-sass-middleware');

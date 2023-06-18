@@ -7,4 +7,7 @@ router.use('/user',require('./user'));
 router.use('/post',require('./posts'));
 router.use('/comment',require('./comments'));
 
+//adding route to api
+router.use('/api', require('./api'));
+
 module.exports = router;
