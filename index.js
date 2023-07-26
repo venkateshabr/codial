@@ -15,7 +15,10 @@ const MongoStore = require('connect-mongo');
 const sassMiddleware = require('node-sass-middleware');
 const middleware = require('./confiq/middleware');
 
-
+const chatserver = require('http').Server(app);
+const chatsockets = require('./confiq/chat_socket').chatsockets(chatserver);
+chatserver.listen(5000);
+console.log("chat server is listening");
 
 app.use(sassMiddleware({
     src : './assets/scss',

@@ -1,0 +1,19 @@
+<% if(locals.user){%>
+    <link rel="stylesheet" type="text/css" href="/css/chat_engine.css"></link>
+    <div id="chat-engine">
+        <div id="chat-area">
+            <ul>
+                <li class="others-message">
+                    other message
+                </li>
+                <li class="self-message">
+                    self message
+                </li>
+            </ul>
+        </div>
+        <div id="send-message">
+            <input id="input-box" type="text"></input>
+            <button id="chat-click" type="submit">Send</button>
+        </div>
+    </div>
+<%}%>

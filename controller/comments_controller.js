@@ -1,6 +1,6 @@
 const Comment = require('../model/comments');
 const Post = require('../model/posts');
-
+const Like = require('../model/likes');
 module.exports.create = async function(req,res){
     try{
         let post = await Post.findById(req.body.post);
@@ -49,12 +49,15 @@ module.exports.delete = async function(req,res){
         // This way we can remove the comment id directly from post db. Mangoose helps us..
                 
                 
-        Comment.findById(req.query.cid);
+        let comment = await Comment.findById(req.query.cid);
         let index = post.comment.indexOf(req.query.cid);
         console.log(index);
         post.comment.splice(index,1);
         post.save();
         comment.deleteOne();
+        await Like.deleteMany({likable : comment._id , onModel: 'Comment'}).catch((err)=>{
+            console.log("Error in deleting the likes while removing Comments");
+        });
         if(req.xhr){
             return res.json(200,{
                 data : {

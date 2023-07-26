@@ -1,3 +1,4 @@
+
 {
     //creating the post with ajax
     let createpost = function(){
@@ -17,7 +18,9 @@
 
                    //calling the comment class for the newly creating post..
                    new Comments(data.data._id);                    
-
+                   let newer =$(' .likes-button',newpostdom);
+                   console.log(newer[0]);
+                   likeslister(newer[0]);
                    new Noty({
                     theme : 'relax',
                     text: 'Post published',
@@ -45,6 +48,12 @@
                         ${post.content} 
                         <br/>
                         <small>${ post.user.name }</small>
+
+                        <div >
+                          <a href="like/toggle/?id=${post._id }&type=Post" class="fa fa-thumbs-up likes-button">Likes <span class="likes">${post.like.length }</span></a> 
+                          
+                        </div>
+
                     <div class="post-comments">
                         
                             <form action="/comment/create-comment" id="${ post._id }-new-comment-form" method="post">
@@ -104,6 +113,7 @@
             deletepostDom($(' .delete-post-button',self));
             let postId = self.prop('id').split('-')[1];
             new Comments(postId);
+            
         });
        
     }
@@ -111,8 +121,9 @@
    function  myfunction(x){
         x.classList.toggle('liked');
         if(x){
-            console.log('ihh')
-            $(`${this > span }`).innerText = 1;
+            console.log('ihh');
+            console.log(x);
+
         }
     }
 

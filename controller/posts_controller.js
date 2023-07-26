@@ -1,5 +1,6 @@
 const Post = require('../model/posts');
 const Comment = require('../model/comments');
+const Like = require('../model/likes');
 const User = require('../model/user');
 
 module.exports.createpost = async  function(req,res){
@@ -40,6 +41,12 @@ module.exports.destroy = function(req,res){
                 console.log('Error in removing the commments of the post : ',err);
                 req.flash('error','you cannot delete the potst!')
                 res.redirect('back');
+            });
+            Like.deleteMany({likable : post._id , onModel: 'Post'}).catch((err)=>{
+                console.log("Error in deleting the likes while removing Posts");
+            });
+            Like.deleteMany({likable : {$in: post.comment}}).catch((err)=>{
+                console.log("Error in removing comments like while removing posts");
             });
 
             if(req.xhr){

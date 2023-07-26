@@ -29,6 +29,7 @@ class Comments{
                     console.log(data.data.post);
                     $(`#post-comments-${ post_id }`).prepend(newcomment);
                     pSelf.deletecomment($(' .comment-delete',newcomment));
+                    likeslister($(' .likes-button',newcomment)[0]);
                     new Noty({
                         theme : 'relax',
                         text: 'comment Added',
@@ -51,6 +52,10 @@ class Comments{
                  <a class="comment-delete" href="/comment/delete/?id=${post._id}&cid=${comment._id}">X</a>
                  ${comment.content }<br/>
                  <small>${comment.user.name}</small>
+                    <div >
+                        <a href="like/toggle/?id=${comment._id }&type=Comment" class="fa fa-thumbs-up likes-button">Likes <span class="likes">${comment.like.length }</span></a> 
+                        
+                    </div>
             </li>`);
     }
 

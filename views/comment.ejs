@@ -4,4 +4,10 @@
     <% } %>
     <%= comment.content %><br/>
     <small><%= comment.user.name %></small>
+    <% if(locals.user){%>
+        <div >
+            <a href="like/toggle/?id=<%= comment._id %>&type=Comment" class="fa fa-thumbs-up likes-button">Likes <span class="likes"><%= comment.like.length %></span></a> 
+            
+        </div>
+        <%}%>
 </li>

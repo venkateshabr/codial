@@ -3,17 +3,19 @@
 <li id="post-<%= post._id %>">
     <% if(locals.user && locals.user.id == post.user.id ) { %>
         <small>
-            <a class="delete-post-button" href="/post/delete/<%= post.id %>">X</a>
+            <a class="delete-post-button" href="/post/delete/<%= post._id %>">X</a>
         </small>
     <% } %>
     <%= post.content %>
     <br/>
     <small><%= post.user.name %></small>
     <br/>
+    <% if(locals.user){%>
     <div >
-        <i onclick="myfunction(this)" class="fa fa-thumbs-up"></i>
-        <span id="likes-<%= post.id %>"></span>
+        <a href="like/toggle/?id=<%= post._id %>&type=Post" class="fa fa-thumbs-up likes-button">Likes<span class="likes"><%= post.like.length %></span> </a> 
+        
     </div>
+    <%}%>
     <div class="post-comments">
         <% if(locals.user){%>
             <form action="/comment/create-comment" id="<%= post._id %>-new-comment-form" method="post">
